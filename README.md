@@ -1,7 +1,5 @@
-# finance
-
-Implement a website via which users can “buy” and “sell” stocks
+# Notion IG Gallery Widget
 
 ## Code authorship
 
-2021 © [Jessan Rendell G. Belenzo](https://www.github.com/jessanrendell)
+2025 © [Aster Decoran](https://www.github.com/asterdecoran)
