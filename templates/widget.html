@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Widget
+{% endblock %}
+
+{% block main %}
+    <form action="/" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="notion-token" placeholder="Notion Integration Token" type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="database-id" placeholder="Database URL" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Create Widget</button>
+    </form>
+{% endblock %}
