@@ -59,7 +59,7 @@ def index():
             return apology("must provide notion token")
 
         # Ensure password was submitted
-        elif not (database_id := request.form.get("database-id")):
+        elif not (database_url := request.form.get("database-url")):
             return apology("must provide database id")
         
         widget_id = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(8)])
@@ -70,19 +70,19 @@ def index():
         # Insert user credentials into database
         db.execute(
             """
-            INSERT INTO widgets (widget_id, notion_token, database_id, username)
+            INSERT INTO widgets (widget_id, notion_token, database_url, username)
             VALUES (?, ?, ?, ?)
             """,
             widget_id,
             notion_token,
-            database_id,
+            database_url,
             db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
         )
 
         widget_url = request.host_url + "widget/" + widget_id
 
         # Redirect user to link
-        return render_template("link.html", widget_url=widget_url, notion_token=notion_token, database_id=database_id)
+        return render_template("link.html", widget_url=widget_url)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -101,7 +101,7 @@ def show_widget(widget_id):
     if widget is None:
         abort(404)
 
-    posts = get_notion_database(widget["notion_token"], widget["database_id"])
+    posts = get_notion_database(widget["notion_token"], widget["database_url"])
     return render_template("widget2.html", posts=posts)
 
 print(app.url_map)

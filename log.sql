@@ -15,7 +15,7 @@ CREATE TABLE widgets (
     id INTEGER,
     widget_id TEXT NOT NULL,
     notion_token TEXT NOT NULL,
-    database_id TEXT NOT NULL,
+    database_url TEXT NOT NULL,
     username TEXT NOT NULL,
     PRIMARY KEY(id)
 );

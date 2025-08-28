@@ -1,6 +1,6 @@
 import os
 import requests
-import urllib.parse
+from urllib.parse import urlparse
 
 from flask import redirect, render_template, request, session
 from functools import wraps
@@ -37,11 +37,11 @@ def login_required(f):
     return decorated_function
 
 
-def get_notion_database(notion_token, database_id):
+def get_notion_database(notion_token, database_url):
     """Get a Notion database's details."""
     try:
         notion = NotionClient(auth=notion_token)
-        response = notion.databases.query(**{'database_id': database_id})
+        response = notion.databases.query(**{'database_id': urlparse(database_url).path.split('/')[1]})
         items = []
         for item in response['results']:
             name = item['properties']['Name']['title'][0]['text']['content']
