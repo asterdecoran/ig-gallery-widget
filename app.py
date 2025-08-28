@@ -14,7 +14,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from notion_client import Client as NotionClient
 
-from helpers import apology, login_required
+from helpers import apology, login_required, get_notion_database
 
 # Configure application
 app = Flask(__name__)
@@ -86,7 +86,7 @@ def index():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("widget.html")
+        return render_template("index.html")
 
 
 def get_db():
@@ -100,8 +100,9 @@ def show_widget(widget_id):
     widget = db.execute("SELECT * FROM widgets WHERE widget_id = ?", (widget_id,)).fetchone()
     if widget is None:
         abort(404)
-    return f"This is widget {widget['widget_id']}"
-    # or render_template("widget.html", widget=widget)
+
+    posts = get_notion_database(widget["notion_token"], widget["database_id"])
+    return render_template("widget2.html", posts=posts)
 
 print(app.url_map)
 
